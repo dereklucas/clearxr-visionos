@@ -237,9 +237,7 @@ class SpatialControllerManager {
     /// Falls back to generic GCInput names for non-PSVR2 spatial controllers.
     private func readHandState(from controller: GCController, hand: ControllerHand) -> SpatialControllerPacket.HandState {
         var state = SpatialControllerPacket.HandState()
-        guard let input = controller.input.nextInputState() else {
-            return state
-        }
+        let input = controller.input.capture()
     
         if input.buttons["Button A"]?.pressedInput.isPressed  ?? false { state.buttons |= SpatialControllerPacket.ButtonMask.buttonA }
         if input.buttons["Button A"]?.touchedInput?.isTouched  ?? false { state.buttons |= SpatialControllerPacket.ButtonMask.touchButtonA }
